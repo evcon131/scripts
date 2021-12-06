@@ -1,0 +1,10 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal 
+#SBATCH -2 30:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+trim_galore --paired ../C3-1.fq.gz ../c3-2.fq.gz
+
+

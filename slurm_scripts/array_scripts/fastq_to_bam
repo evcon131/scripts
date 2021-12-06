@@ -1,0 +1,24 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal
+#SBATCH -t 24:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH --mem=8G
+
+ml jdk
+
+names=($(cat rlist))
+sids=($(cat slist))
+
+
+/projects/evcon\@colostate.edu/gatk-4.2.0.0/gatk --java-options "-Xmx8g" FastqToSam \
+F1=../trimed_reads/${names[${SLURM_ARRAY_TASK_ID}]}_1_val_1.fq.gz \
+F2=../trimed_reads/${names[${SLURM_ARRAY_TASK_ID}]}_2_val_2.fq.gz \
+O=${sids[${SLURM_ARRAY_TASK_ID}]}.bam \
+SM=${sids[${SLURM_ARRAY_TASK_ID}]}.bam \
+RG=${sids[${SLURM_ARRAY_TASK_ID}]}.bam \
+TMP_DIR=${sids[${SLURM_ARRAY_TASK_ID}]}_tmp
+

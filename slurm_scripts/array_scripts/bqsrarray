@@ -1,0 +1,20 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal
+#SBATCH -t 4:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH --mem=40000
+
+ml jdk
+
+names=($(cat sids.txt))
+
+/projects/evcon\@colostate.edu/gatk-4.2.0.0/gatk BaseRecalibrator \
+-I ${names[${SLURM_ARRAY_TASK_ID}]}.RG.bam \
+-R /projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.dna.toplevel.fa \
+--known-sites /projects/evcon\@colostate.edu/ref/canis_lupus_familiaris.vcf \
+-O ${names[${SLURM_ARRAY_TASK_ID}]}.recal_data.table \
+--tmp-dir tmp

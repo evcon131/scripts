@@ -1,0 +1,20 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal 
+#SBATCH -t 6:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --cpus-per-task=8
+#SBATCH --array=0-30
+ml perl
+export PERL_LOCAL=/projects/$USER/perl_local
+eval $(perl -I$PERL_LOCAL/lib/perl5 -Mlocal::lib=$PERL_LOCAL)
+PATH=$PATH:/projects/evcon\@colostate.edu/STAR-2.5.3a/bin/Linux_x86_64/
+names=($(cat slm_list.txt))
+
+/projects/evcon\@colostate.edu/RSEM-1.3.1/rsem-calculate-expression \
+--paired-end --star-gzipped-read-file --star --p 8 \
+${names[${SLURM_ARRAY_TASK_ID}]}_1_val_1.fq.gz ${names[${SLURM_ARRAY_TASK_ID}]}_2_val_2.fq.gz \
+/projects/evcon\@colostate.edu/RSEM-1.3.1/ref/dog ./${names[${SLURM_ARRAY_TASK_ID}]}
+

@@ -1,0 +1,21 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal 
+#SBATCH -t 24:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH --mem=40000
+#SBATCH -c 6
+
+
+names=($(cat rlist))
+sids=($(cat slist))
+
+bwa mem -t 6 \
+/projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.dna.toplevel.fa \
+../trimed_reads/${names[${SLURM_ARRAY_TASK_ID}]}_1_val_1.fq.gz \
+../trimed_reads/${names[${SLURM_ARRAY_TASK_ID}]}_2_val_2.fq.gz \
+| samtools view -b -@ 5 - | samtools sort -@ 5 - > ${sids[${SLURM_ARRAY_TASK_ID}]}.bam
+

@@ -1,0 +1,21 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal 
+#SBATCH -t 6:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --mem=40000
+#SBATCH -C 5
+
+/projects/evcon\@colostate.edu/STAR-2.7.3a/bin/Linux_x86_64/STAR \
+--genomeDir /projects/evcon\@colostate.edu/ref/str_cf3/ \
+--outSAMtype BAM SortedByCoordinate \
+--quantMode GeneCounts \
+--sjdbGTFfile /projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.98.gtf \
+--outFilterMultimapNmax 1 \
+--runThreadN 5 \
+--readFilesCommand zcat \
+--outFileNamePrefix t3 \
+ --readFilesIn ../TZL38094_1_val_1.fq.gz ../TZL38094_2_val_2.fq.gz
+

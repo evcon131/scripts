@@ -1,0 +1,28 @@
+def biotype_finder(infile):
+	bt typel=[]
+	rlist=[]
+	with open(infile) as fh
+			for line in fh:
+			if line[0]!="#":
+				line=line.strip()
+				ll=line.split("\t")
+				gtype=ll[2]
+				ll=ll[8].split(";")
+				for item in ll:
+					if "gene_id" in item:
+						geneid=item.replace("gene_id ","")
+						geneid=geneid[1:-1]
+				for item in ll:
+					if "gene_biotype" in item:
+						if item not in btypel:
+							btypel.append(item)
+						if "rRNA" in item:
+							if gtype=="gene":
+								rlist.append(geneid)
+	return rlist
+	for item in btypel:
+		print(item)
+if __name__ == '__main__':
+	import sys
+	biotype_finder(sys.argv[1])
+

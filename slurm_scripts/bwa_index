@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos normal 
+#SBATCH -t 10:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com 
+
+bwa index -p canfam3 /projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.dna.toplevel.fa
+
+

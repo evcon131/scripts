@@ -1,0 +1,26 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal
+#SBATCH -t 3:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH --mem=40000
+
+ml jdk
+
+names=($(cat sids.txt))
+
+/projects/evcon\@colostate.edu/gatk-4.2.0.0/gatk AddOrReplaceReadGroups \
+-I ${names[${SLURM_ARRAY_TASK_ID}]}.markdup.bam \
+-O ${names[${SLURM_ARRAY_TASK_ID}]}.RG.bam \
+-SORT_ORDER coordinate \
+-RGID ${names[${SLURM_ARRAY_TASK_ID}]} \
+-RGLB ${names[${SLURM_ARRAY_TASK_ID}]} \
+-RGPU UNIT1 \
+-RGPL illumina \
+-RGSM ${names[${SLURM_ARRAY_TASK_ID}]} \
+--TMP_DIR tmp \
+-CREATE_INDEX True
+

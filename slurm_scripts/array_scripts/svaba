@@ -1,0 +1,23 @@
+#! /bin/bash
+#SBATCH --partition=smem
+#SBATCH --qos=normal
+#SBATCH -t 7-00:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH --mem=8G
+#SBATCH --cpus-per-task=4
+
+ml gcc
+
+names=($(cat rlist))
+sids=($(cat slist))
+
+svaba run -z \
+-t ${sids[${SLURM_ARRAY_TASK_ID}]}.bam \
+-G /projects/evcon\@colostate.edu/ref/bwa2/Canis_familiaris.CanFam3.1.dna.toplevel.fa \
+-a ${sids[${SLURM_ARRAY_TASK_ID}]} \
+-r all \
+-p 4
+

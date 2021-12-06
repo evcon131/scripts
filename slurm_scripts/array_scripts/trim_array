@@ -1,0 +1,15 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal
+#SBATCH -t 10:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH -c 4
+PATH=/projects/evcon\@colostate.edu/install/perl-5.34.0/:$PATH
+names=($(cat slm_list.txt))
+
+trim_galore -j 4 --paired \
+../raw_data/${names[${SLURM_ARRAY_TASK_ID}]}1.fq.gz \
+../raw_data/${names[${SLURM_ARRAY_TASK_ID}]}2.fq.gz 

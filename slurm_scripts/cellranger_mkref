@@ -1,0 +1,22 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal 
+#SBATCH -t 6:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+
+export PATH=$PATH:/projects/evcon@colostate.edu/bin/
+export PATH=$PATH:/projects/evcon@colostate.edu/bowtie2-2.3.4-linux-x86_64/
+export PATH=$PATH:/projects/evcon@colostate.edu/tophat-2.1.1.Linux_x86_64/
+export PATH=$PATH:/projects/evcon\@colostate.edu/TrimGalore-0.6.4/
+export PATH=$PATH:/home/evcon@colostate.edu/.local/bin/
+export PATH=$PATH:/projects/evcon\@colostate.edu/STAR-2.7.3a/bin/Linux_x86_64/
+export PYTHONPATH=/projects/evcon\@colostate.edu/Python-2.7.13/
+export PATH=/projects/evcon\@colostate.edu/Python-2.7.13/:/projects/evcon\@colostate.edu/go/bin/:$PATH
+
+/projects/evcon\@colostate.edu/cellranger-3.1.0/cellranger mkref \
+--genome=cf3 \
+--fasta=/projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.dna.toplevel.fa \
+--genes=/projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.98.gtf
+

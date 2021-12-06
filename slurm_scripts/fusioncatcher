@@ -1,0 +1,35 @@
+#!/bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos normal 
+#SBATCH -t 24:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com 
+#SBATCH --mem=60000
+#SBATCH -c 10 
+
+
+PATH=/projects/evcon\@colostate.edu/jre1.8.0_161/bin/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/bin:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/bowtie:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/bowtie2:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/bwa:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/blat:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/star/source/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/liftover:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/seqtk:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/sratoolkit/bin:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/velvet/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/fatotwobit/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/lzop/src/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/coreutils/src/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/pigz/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/samtools/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/bbmap/:$PATH
+PATH=/projects/evcon\@colostate.edu/fusioncatcher/tools/picard/:$PATH
+fusioncatcher \
+-p 10 \
+-d /projects/evcon@colostate.edu/fc_dep/fc_cf \
+-i TZL36988_1.fq.gz,TZL36988_2.fq.gz \
+-o t1
+

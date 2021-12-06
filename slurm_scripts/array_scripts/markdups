@@ -1,0 +1,22 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal
+#SBATCH -t 3:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH --mem=40000
+
+ml jdk
+
+names=($(cat slm_list.txt))
+sids=($(cat sids.txt))
+
+/projects/evcon\@colostate.edu/gatk-4.2.0.0/gatk MarkDuplicates \
+-I ${names[${SLURM_ARRAY_TASK_ID}]}.bam \
+-O ${sids[${SLURM_ARRAY_TASK_ID}]}.markdup.bam \
+--TMP_DIR tmp \
+--METRICS_FILE ${sids[${SLURM_ARRAY_TASK_ID}]}.txt
+
+

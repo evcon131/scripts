@@ -1,0 +1,10 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal 
+#SBATCH -t 2:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+
+htseq-count -f bam -r pos CNTRL3.bam /projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.98.gtf > c3.tab
+

@@ -1,0 +1,15 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal 
+#SBATCH -t 6:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --mem=40000
+#SBATCH -c 5
+/projects/evcon\@colostate.edu/STAR-2.7.3a/bin/Linux_x86_64/STAR \
+--runMode genomeGenerate \
+--runThreadN 5 \
+--genomeDir str_cf3 \
+--genomeFastaFiles /projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.dna.toplevel.fa \
+--sjdbGTFfile /projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.98.gtf 

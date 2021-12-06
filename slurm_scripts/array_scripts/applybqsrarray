@@ -1,0 +1,20 @@
+#! /bin/bash
+#SBATCH --partition=shas
+#SBATCH --qos=normal
+#SBATCH -t 24:00:00
+#SBATCH -N 1
+#SBATCH --mail-type=END
+#SBATCH --mail-user=evan.conaway@gmail.com
+#SBATCH --array=0-9
+#SBATCH --mem=40000
+ml jdk
+
+names=($(cat sids.txt))
+
+/projects/evcon\@colostate.edu/gatk-4.2.0.0/gatk --java-options "-Xmx4g" HaplotypeCaller \
+-R /projects/evcon\@colostate.edu/ref/Canis_familiaris.CanFam3.1.dna.toplevel.fa \
+-O ${names[${SLURM_ARRAY_TASK_ID}]}.g.vcf.gz \
+${names[${SLURM_ARRAY_TASK_ID}]}.bqsr.bam \
+-ERC GVCF
+
+--tmp-dir tmp
